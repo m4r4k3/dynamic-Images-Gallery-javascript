@@ -26,10 +26,6 @@ var x ="translateX(-1200px)"
 function right(){ 
     if (counter<list.length-1) {
     list[counter].style.transform= x ;
-    rButton.style.backgroundColor = "rgba(29, 29, 29, 0.507)";
-    setTimeout(() => {
-        rButton.style.backgroundColor = "transparent";
-    }, 200);
     counter++
     setmins()
 }
@@ -38,10 +34,6 @@ function right(){
 function left(){
     if (0<=counter-1){
     list[counter-1].style.transform= y ;
-    lButton.style.backgroundColor = "rgba(29, 29, 29, 0.507)";
-    setTimeout(() => {
-        lButton.style.backgroundColor = "transparent";
-    }, 200);
     counter--
     setmins()}
 }
@@ -65,10 +57,26 @@ function setmins(){
     minilist.forEach((element , index)=>{
         element.style.opacity = counter == index ?"10" : "0.7"
         element.style.border =counter== index ? "4px solid white" : "0"
-        element.style.transform=`translateX(calc( 1200px/2 - 100px/2 - ( 100px * ${counter} ) - 10px * ${counter}))`
+        element.style.transform=`translateX(calc(${window.getComputedStyle(document.querySelector(".section")).width} / 2
+         - ${window.getComputedStyle(document.querySelector(".minislider >*")).width} / 2  
+         - (  ${window.getComputedStyle(document.querySelector(".minislider >*")).width} * ${counter} ) 
+         -  ${window.getComputedStyle(document.querySelector(".minislider >*")).marginRight} * ${counter}))`
         })
 }
-
+lButton.addEventListener("click",()=>{
+    lButton.style.backgroundColor = "rgba(29, 29, 29, 0.507)";
+    setTimeout(() => {
+        lButton.style.backgroundColor = "transparent";
+    }, 200);
+    left()
+})
+rButton.addEventListener("click",()=>{
+    rButton.style.backgroundColor = "rgba(29, 29, 29, 0.507)";
+    setTimeout(() => {
+        rButton.style.backgroundColor = "transparent";
+    }, 200);
+    right()
+})
 for(let i =0 ; i<imagesUrl.length ; i++){
     let e =document.createElement("div")
     e.id =  `d${i}`
@@ -80,6 +88,7 @@ for(let i =0 ; i<imagesUrl.length ; i++){
 for(let i =0 ; i<imagesUrl.length ; i++){
     let e = document.createElement("div")
     e.id = `d${i}mini`
+    e.style.width = parseFloat(window.getComputedStyle(document.querySelector(".minislider")).height) +"px"
     document.querySelector(".minislider").appendChild(e)
     minilist.push(e)
 }
